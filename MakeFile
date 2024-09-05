@@ -1,0 +1,29 @@
+# Define the environment name
+ENV_NAME = venv
+
+# Define the paths to the scripts and data files
+DATA_SCRIPT = scripts/data_prep.py
+TRAIN_SCRIPT = scripts/train_model.py
+EVALUATE_SCRIPT = scripts/evaluate_model.py
+DEPLOY_SCRIPT = scripts/deploy_model.py
+DATA_FILE = data/Iris_Cleaned.csv
+MODEL_FILE = models/deployment_model.pkl
+
+# Define the targets
+.PHONY: data train evaluate deploy
+
+data:
+	@echo "Mengunduh dan memproses data..."
+	conda run -n $(ENV_NAME) python $(DATA_SCRIPT)
+
+train:
+	@echo "Melatih model..."
+	conda run -n $(ENV_NAME) python $(TRAIN_SCRIPT)
+
+evaluate:
+	@echo "Mengevaluasi model..."
+	conda run -n $(ENV_NAME) python $(EVALUATE_SCRIPT)
+
+deploy:
+	@echo "Menyimpan model..."
+	conda run -n $(ENV_NAME) python $(DEPLOY_SCRIPT)
